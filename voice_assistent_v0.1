@@ -1,9 +1,10 @@
 import os
 import time
-import speech_recognition as sr
 from fuzzywuzzy import fuzz
 import pyttsx3
 import datetime
+import speech_recognition as sr
+
 
 opts = {
     "alias": ('ноутбук', 'комп', 'ноут', 'компьютер', 'пердун', 'робот',
@@ -26,7 +27,7 @@ def speak(what):
 def callback(recognizer, audio):
     try:
         voice = recognizer.recognize_google(audio, language="ru-RU").lower()
-        print("[log] Распознано: " + voice)
+        print("Распознано: " + voice)
 
         if voice.startswith(opts["alias"]):
             cmd = voice
@@ -41,9 +42,9 @@ def callback(recognizer, audio):
             execute_cmd(cmd['cmd'])
 
     except sr.UnknownValueError:
-        print("[log] Голос не распознан!")
+        print("Голос не распознан!")
     except sr.RequestError as e:
-        print("[log] Неизвестная ошибка, проверьте интернет!")
+        print("Неизвестная ошибка!")
 
 
 def recognize_cmd(cmd):
