@@ -1,11 +1,11 @@
 import os
 import time
+import speech_recognition as sr
 from fuzzywuzzy import fuzz
 import pyttsx3
 import datetime
-import speech_recognition as sr
 
-
+# настройки
 opts = {
     "alias": ('ноутбук', 'комп', 'ноут', 'компьютер', 'пердун', 'робот',
               'тело', 'шляпа', 'китаец', 'сяоми', 'коробка'),
@@ -13,7 +13,9 @@ opts = {
     "cmds": {
         "ctime": ('текущее время', 'сейчас времени', 'который час'),
         "radio": ('включи музыку', 'воспроизведи радио', 'включи радио'),
-        "stupid1": ('расскажи анекдот', 'рассмеши меня', 'ты знаешь анекдоты')
+        "stupid1": ('расскажи анекдот', 'рассмеши меня', 'ты знаешь анекдоты'),
+        "net":('включи интернет','интернет','включи нэт','включи хром', 'нэт'),
+        "list":('список','перевозчики','список перевозчиков','открой список')
     }
 }
 
@@ -27,7 +29,7 @@ def speak(what):
 def callback(recognizer, audio):
     try:
         voice = recognizer.recognize_google(audio, language="ru-RU").lower()
-        print("Распознано: " + voice)
+        print("[log] Распознано: " + voice)
 
         if voice.startswith(opts["alias"]):
             cmd = voice
@@ -42,9 +44,9 @@ def callback(recognizer, audio):
             execute_cmd(cmd['cmd'])
 
     except sr.UnknownValueError:
-        print("Голос не распознан!")
+        print("[log] Голос не распознан!")
     except sr.RequestError as e:
-        print("Неизвестная ошибка!")
+        print("[log] Неизвестная ошибка, проверьте интернет!")
 
 
 def recognize_cmd(cmd):
@@ -69,7 +71,16 @@ def execute_cmd(cmd):
         os.system("C:\\Users\\BOP.mp3")
 
     elif cmd == 'stupid1':
-        speak('Пупа и Лупа пришли получать зарплату. Ждут они значит ждут долго и получили наконец то зарплату. Вышли закурили и тут выбегает за ними бухгалтер и говорит Черт мы перепутали, Лупа получила зарплату за пупу а пупа за лупу ахаха')
+        speak('Пупа и Лупа пришли получать зарплату. Ждут они значит ждут долго и получили наконец то зарплату. Вышли закурили и тут выбегает за ними бухгалтер и говорит Черт мы перепутали, Лупа получила зарплату за пупу а пупа за лупу ахахахахахахахаххахахаха')
+
+    elif cmd == 'net':
+        os.system("C:\\Users\\Xiaomi\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe")
+
+    elif cmd == 'list':
+        speak('Список пока не забит')
+
+
+
     else:
         print('Команда не распознана, повторите!')
 
